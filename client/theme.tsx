@@ -89,8 +89,8 @@ const THEME_STORAGE_KEY = "study-buddy-theme";
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const systemColorScheme = useColorScheme();
   
-  // Default to dark mode if no saved preference, matching the implementation plan
-  const [mode, setMode] = useState<ThemeMode>("dark");
+  // Default to light mode on first open, unless the user previously saved a preference
+  const [mode, setMode] = useState<ThemeMode>("light");
 
   useEffect(() => {
     // Try to load from localStorage on web

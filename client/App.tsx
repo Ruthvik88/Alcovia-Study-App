@@ -709,7 +709,7 @@ export default function App(): React.JSX.Element {
     const dashboardTasks = allTasks.slice(0, 8);
 
     return (
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.page}>
         <View style={styles.headerRow}>
           <View>
             <Text style={styles.welcomeText}>Welcome back, Alex!</Text>
@@ -940,7 +940,7 @@ export default function App(): React.JSX.Element {
 
   function renderFocusTimer() {
     return (
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.page}>
         <View style={styles.headerRow}>
           <Text style={styles.pageTitle}>Focus Timer</Text>
           <View style={styles.headerStats}>
@@ -1058,7 +1058,7 @@ export default function App(): React.JSX.Element {
 
   function renderSyllabus() {
     return (
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.page}>
         <View style={styles.headerRow}>
           <Text style={styles.pageTitle}>Syllabus</Text>
           <View style={styles.headerStats}>
@@ -1168,7 +1168,7 @@ export default function App(): React.JSX.Element {
       { name: "Gadget Fund +₹500", cost: 5000, icon: "📱" },
     ];
     return (
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.page}>
         <View style={styles.headerRow}>
           <Text style={styles.pageTitle}>Rewards</Text>
           <View style={styles.headerStats}>
@@ -1234,7 +1234,7 @@ export default function App(): React.JSX.Element {
 
   function renderSettings() {
     return (
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.page}>
         <Text style={styles.pageTitle}>Settings</Text>
 
         <View style={styles.card}>
@@ -1288,7 +1288,7 @@ export default function App(): React.JSX.Element {
     const pendingCount = outbox.length - deliveredCount;
 
     return (
-      <ScrollView contentContainerStyle={styles.page}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.page}>
         <View style={styles.devContainer}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Device controls</Text>
@@ -1482,11 +1482,13 @@ export default function App(): React.JSX.Element {
 const createStyles = (colors: any) => StyleSheet.create({
   safeArea: {
     flex: 1,
+    width: "100%",
     backgroundColor: colors.background,
   },
   layout: {
     flex: 1,
     flexDirection: "row",
+    width: "100%",
   },
   sidebar: {
     width: 220,
@@ -1586,12 +1588,20 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   mainContent: {
     flex: 1,
+    flexBasis: 0,
+    minWidth: 0,
     backgroundColor: colors.background,
   },
+  scrollView: {
+    flex: 1,
+    width: "100%",
+  },
   page: {
+    flexGrow: 1,
     padding: 18,
     gap: 14,
     width: "100%",
+    minHeight: "100%",
   },
   pageTitle: {
     fontSize: 24,
