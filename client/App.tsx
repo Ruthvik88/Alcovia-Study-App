@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View
 } from "react-native";
 import { FOCUS_GRACE_PERIOD_SECONDS, STUDENT_ID } from "../shared/seed";
@@ -296,6 +297,7 @@ function getSubjectBadgeColor(index: number) {
 
 export default function App(): React.JSX.Element {
   const { colors, mode, toggleTheme, setThemeMode } = useTheme();
+  const { width } = useWindowDimensions();
   const initialDevice = parseDeviceFromUrl();
   const [selectedMinutes, setSelectedMinutes] = useState(25);
   const [customMinutesStr, setCustomMinutesStr] = useState("");
@@ -316,6 +318,7 @@ export default function App(): React.JSX.Element {
   const projection = buildProjection(deviceState);
   const activeCountdown = getSessionCountdown(projection, clock);
   const canSync = deviceState.online && actualBrowserOnline;
+  const pageScale = width >= 1440 ? 0.86 : width >= 1280 ? 0.92 : 1;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1418,7 +1421,16 @@ export default function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.layout}>
+      <View style={[styles.layout, pageScale < 1 && styles.layoutScaled]}>
+        <View
+          style={[
+            styles.pageScaleShell,
+            pageScale < 1 && {
+              transform: [{ scale: pageScale }],
+              width: `${100 / pageScale}%`
+            }
+          ]}
+        >
         {/* Sidebar */}
         <View style={styles.sidebar}>
           <View style={styles.sidebarHeader}>
@@ -1474,6 +1486,7 @@ export default function App(): React.JSX.Element {
         <View style={styles.mainContent}>
           {renderMainContent()}
         </View>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -1487,6 +1500,14 @@ const createStyles = (colors: any) => StyleSheet.create({
   layout: {
     flex: 1,
     flexDirection: "row",
+  },
+  layoutScaled: {
+    overflow: "hidden",
+  },
+  pageScaleShell: {
+    flex: 1,
+    flexDirection: "row",
+    transformOrigin: "top left",
   },
   sidebar: {
     width: 250,
