@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Alcovia Study App",
+    "slug": "alcovia-study-app",
+    "scheme": "alcovia-study-app",
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
+

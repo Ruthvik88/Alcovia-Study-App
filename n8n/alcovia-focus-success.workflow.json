@@ -1,0 +1,86 @@
+{
+  "name": "Alcovia Focus Success Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "alcovia-focus-success",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "Webhook_1",
+      "name": "Focus Success Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "alcovia-focus-success"
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst payload = $json;\nconst eventId = payload.eventId || `focus-success:${payload.sessionId}`;\nstaticData.seen = staticData.seen || {};\nif (staticData.seen[eventId]) {\n  return [];\n}\nstaticData.seen[eventId] = new Date().toISOString();\nreturn [{\n  json: {\n    ...payload,\n    eventId,\n    message: `Streak now ${payload.streakDays} day(s), +${payload.coinsAwarded} coins.`\n  }\n}];"
+      },
+      "id": "Code_1",
+      "name": "Dedupe By Event Id",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:4000/notifications/mock",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "HttpRequest_1",
+      "name": "Send To Mock Sink",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Focus Success Webhook": {
+      "main": [
+        [
+          {
+            "node": "Dedupe By Event Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedupe By Event Id": {
+      "main": [
+        [
+          {
+            "node": "Send To Mock Sink",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "alcovia-focus-success-v1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "alcovia-focus-success",
+  "tags": []
+}
+
