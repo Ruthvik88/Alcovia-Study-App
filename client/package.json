@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "web": "expo start --web",
+    "export:web": "expo export --platform web",
     "start": "expo start"
   },
   "dependencies": {

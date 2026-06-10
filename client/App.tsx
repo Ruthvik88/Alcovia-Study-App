@@ -60,9 +60,10 @@ const STATUS_LABELS: Record<TaskStatus, string> = {
 };
 
 const SERVER_BASE_URL =
-  typeof window !== "undefined"
+  process.env.EXPO_PUBLIC_SERVER_BASE_URL ??
+  (typeof window !== "undefined"
     ? `http://${window.location.hostname || "localhost"}:4000`
-    : "http://localhost:4000";
+    : "http://localhost:4000");
 
 function makeStorageKey(namespace: string): string {
   return `alcovia-device:${namespace}`;
