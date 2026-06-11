@@ -10,10 +10,10 @@ This repo contains an offline-first implementation of Alcovia's two core feature
 
 Stack:
 
-- `client/`: Expo + React Native (web-friendly demo surface)
-- `server/`: Express sync server
+- `frontend/`: Expo + React Native (web-friendly demo surface)
+- `backend/`: Express sync server
 - `shared/`: shared TypeScript types and deterministic projection logic
-- `n8n/`: real n8n workflow export for focus-success notifications
+- `n8n-workflow.json`: real n8n workflow export for focus-success notifications
 
 ## What is implemented
 
@@ -102,7 +102,7 @@ When the server sees a newly successful session for the first time, it creates o
 
 The server attempts delivery to `N8N_WEBHOOK_URL`.
 
-The n8n workflow in [n8n/alcovia-focus-success.workflow.json](n8n/alcovia-focus-success.workflow.json):
+The n8n workflow in [n8n-workflow.json](n8n-workflow.json):
 
 1. receives the webhook
 2. dedupes by `eventId` using workflow static data
@@ -159,7 +159,7 @@ npx n8n
 
 ### 2. Import the workflow
 
-Import [n8n/alcovia-focus-success.workflow.json](n8n/alcovia-focus-success.workflow.json).
+Import [n8n-workflow.json](n8n-workflow.json).
 
 ### 3. Activate the workflow
 
@@ -269,9 +269,9 @@ Expected:
 I ran:
 
 ```bash
-npx tsc -p client/tsconfig.json --noEmit
-npx tsc -p server/tsconfig.json --noEmit
-npx expo export --platform web   # regenerated client/dist
+npx tsc -p frontend/tsconfig.json --noEmit
+npx tsc -p backend/tsconfig.json --noEmit
+npx expo export --platform web   # regenerated frontend/dist
 ```
 
 I also ran direct sync requests against the live local server and confirmed:

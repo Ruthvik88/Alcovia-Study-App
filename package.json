@@ -2,14 +2,14 @@
   "name": "alcovia-study-app",
   "private": true,
   "workspaces": [
-    "client",
-    "server"
+    "frontend",
+    "backend"
   ],
   "scripts": {
-    "dev": "concurrently \"npm --workspace server run dev\" \"npm --workspace client run web\"",
-    "dev:client": "npm --workspace client run web",
-    "dev:server": "npm --workspace server run dev",
-    "build": "npm --workspace server run build"
+    "dev": "concurrently \"npm --workspace backend run dev\" \"npm --workspace frontend run web\"",
+    "dev:client": "npm --workspace frontend run web",
+    "dev:server": "npm --workspace backend run dev",
+    "build": "npm --workspace backend run build"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"

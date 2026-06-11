@@ -1,5 +1,5 @@
 {
-  "name": "alcovia-client",
+  "name": "alcovia-frontend",
   "private": true,
   "main": "index.js",
   "scripts": {
