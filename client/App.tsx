@@ -751,10 +751,10 @@ export default function App(): React.JSX.Element {
                 <View style={styles.newSessionContainer}>
                   <Text style={styles.focusQuestion}>What are we focusing on?</Text>
                   <Text style={styles.bigTimerText}>
-                    {selectedMinutes}:00
+                    {selectedMinutes < 1 ? `00:${Math.round(selectedMinutes * 60).toString().padStart(2, "0")}` : `${selectedMinutes}:00`}
                   </Text>
                   <View style={styles.durationRow}>
-                    {[15, 25, 45].map((minutes) => (
+                    {[5 / 60, 15, 25, 45].map((minutes) => (
                       <Pressable
                         key={minutes}
                         style={[
@@ -769,15 +769,14 @@ export default function App(): React.JSX.Element {
                       >
                         <Text
                           style={[
-                          styles.durationText,
-                          selectedMinutes === minutes && !showCustomInput && styles.durationTextActive
+                            styles.durationText,
+                            selectedMinutes === minutes && !showCustomInput && styles.durationTextActive
                           ]}
                         >
-                          {minutes}m
+                          {minutes < 1 ? `${Math.round(minutes * 60)}s` : `${minutes}m`}
                         </Text>
                       </Pressable>
                     ))}
-                    
                     {showCustomInput ? (
                       <TextInput
                         style={[styles.durationChip, styles.customInput]}
@@ -799,7 +798,7 @@ export default function App(): React.JSX.Element {
                       <Pressable
                         style={[
                           styles.durationChip,
-                          ![15, 25, 45].includes(selectedMinutes) && styles.durationChipActive
+                          ![5 / 60, 15, 25, 45].includes(selectedMinutes) && styles.durationChipActive
                         ]}
                         onPress={() => {
                           setShowCustomInput(true);
@@ -809,7 +808,7 @@ export default function App(): React.JSX.Element {
                         <Text
                           style={[
                             styles.durationText,
-                            ![15, 25, 45].includes(selectedMinutes) && styles.durationTextActive
+                            ![5 / 60, 15, 25, 45].includes(selectedMinutes) && styles.durationTextActive
                           ]}
                         >
                           Custom
