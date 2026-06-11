@@ -142,7 +142,9 @@ export default function FocusTimer({ secondsLeft, minutesTarget, sessionId, onGi
         {/* Timer Text */}
         <View style={styles.textContainer}>
           <Text style={styles.timerValue}>{formatDuration(secondsLeft)}</Text>
-          <Text style={styles.timerLabel}>Target: {minutesTarget} min</Text>
+          <Text style={styles.timerLabel}>
+            Target: {minutesTarget < 1 ? `${Math.round(minutesTarget * 60)} sec` : `${minutesTarget} min`}
+          </Text>
         </View>
       </View>
 
