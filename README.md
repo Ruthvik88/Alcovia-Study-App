@@ -15,6 +15,23 @@ Stack:
 - `shared/`: shared TypeScript types and deterministic projection logic
 - `n8n-workflow.json`: real n8n workflow export for focus-success notifications
 
+Phone Device
+    │
+    ▼
+Local Operation Queue
+    │
+    ▼
+Express Sync Server
+    │
+    ▼
+Outbox Event
+    │
+    ▼
+n8n Workflow
+    │
+    ▼
+Mock Notification Sink
+
 ## What is implemented
 
 ### Offline-first device model
@@ -290,3 +307,14 @@ I also ran direct sync requests against the live local server and confirmed:
 - If the app reloads while a session is still running, the client records it as `app_switch` on recovery.
 - Web demo storage uses per-device namespaces instead of separate browser profiles.
 - Bootstrap hydration is best-effort: if the server is unreachable the sync loop handles catchup.
+
+## Assignment Requirements Mapping
+
+| Requirement | Implementation |
+|------------|----------------|
+| Offline-first actions | Local operation queue + local projections |
+| Two-device convergence | Deterministic merge rules |
+| Idempotent rewards | Unique sessionId projection |
+| Idempotent automation | Stable eventId + n8n dedupe |
+| Conflict resolution | baseVersion + completion bias + tombstones |
+| Demonstrable | Dev panel + automation panel |

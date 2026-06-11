@@ -17,3 +17,16 @@ We deliberately avoid wall-clock Last-Write-Wins (LWW) since student clocks can 
 * **Unique Session Deduping:** Rewards and streaking counts are projected based on unique `sessionId` values. Retries or replayed batches cannot award duplicate coins or double-increment streaks.
 * **Stable Event ID:** Webhook events are emitted with a stable identifier: `focus-success:<sessionId>`.
 * **Workflow Deduplication:** The `n8n` workflow acts as an idempotent delivery mechanism, tracking seen event IDs to ensure each successful focus session triggers exactly one mock notification delivery.
+
+## Tradeoff
+
+I chose a simple deterministic merge strategy rather than implementing
+a full CRDT.
+
+Benefits:
+- Easier reasoning
+- Smaller implementation
+- Easier debugging
+
+Drawback:
+- Some user intent may be lost in complex concurrent edits.
