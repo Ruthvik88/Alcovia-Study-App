@@ -1300,16 +1300,16 @@ export default function App(): React.JSX.Element {
               >
                 <Text style={styles.btnText}>{deviceState.online ? "Go offline" : "Go online"}</Text>
               </Pressable>
-              <Pressable style={styles.btn} onPress={() => void syncWithServer()}>
+              <Pressable style={[styles.btn, styles.btnBlue]} onPress={() => void syncWithServer()}>
                 <Text style={styles.btnText}>Sync now</Text>
               </Pressable>
-              <Pressable style={styles.btn} onPress={() => void resetServer()}>
+              <Pressable style={[styles.btn, styles.btnReset]} onPress={() => void resetServer()}>
                 <Text style={styles.btnText}>Reset server</Text>
               </Pressable>
             </View>
             <View style={styles.row}>
               <Pressable
-                style={[styles.btn, deviceState.lastSentBatch.length === 0 && { opacity: 0.4 }]}
+                style={[styles.btn, styles.btnReplay, deviceState.lastSentBatch.length === 0 && { opacity: 0.4 }]}
                 onPress={() => void replayLastBatch()}
               >
                 <Text style={styles.btnText}>Replay last batch ({deviceState.lastSentBatch.length} ops)</Text>
@@ -2154,6 +2154,15 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   btnWarning: {
     backgroundColor: colors.danger,
+  },
+  btnBlue: {
+    backgroundColor: "#3b82f6", // Vibrant blue
+  },
+  btnReset: {
+    backgroundColor: colors.danger, // Red/warning color
+  },
+  btnReplay: {
+    backgroundColor: colors.accentAlt, // Amber/yellow color
   },
   btnText: {
     color: "#ffffff",
